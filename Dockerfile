@@ -5,5 +5,5 @@ RUN pip install google-cloud-pubsub
 WORKDIR /tweets
 COPY . .
 ENV PYTHONPATH="."
-CMD ["tweets.py","tensile-pier-322516","twitter"]
+CMD ["twitter_stream.py","annular-garage-325314","twitter"]
 ENTRYPOINT ["python3"]
