@@ -6,7 +6,7 @@ from airflow.operators.python_operator import PythonOperator, BranchPythonOperat
 from google.cloud import storage
 from google.cloud import bigquery
 
-#Now I shall define the functions for the DAG
+
 DAG_NAME = 'twitterDAG'
 
 default_args = {
@@ -31,7 +31,7 @@ dag = DAG(
 
 def merge_chunks():
     storage_client = storage.Client()
-    bucket_name = "consumed-twitter-data1"
+    bucket_name = "twitter-data-1059"
     blobs = storage_client.list_blobs(bucket_name)
     merged = pd.DataFrame()
     for blob in blobs:
@@ -47,7 +47,7 @@ def merge_chunks():
 
 def bucket_to_bq():
     client = bigquery.Client()
-    table_id = "tensile-pier-322516.tweetsdata.tweet_info"
+    table_id = "annular-garage-325314.twitter_data.tweets_info"
     job_config = bigquery.LoadJobConfig(
         schema = [
                 bigquery.SchemaField("id", "NUMERIC"),
@@ -59,7 +59,7 @@ def bucket_to_bq():
         source_format = bigquery.SourceFormat.CSV,
         allow_quoted_newlines = True
     )
-    uri = "gs://us-central1-newcomposer-ff97357e-bucket/data/merged.csv"
+    uri = "gs://us-central1-tweets-composer-d755a98b-bucket/data/merged.csv"
     load_job = client.load_table_from_uri(
         uri, table_id, job_config = job_config
     )
@@ -84,6 +84,4 @@ task_2_bucket_to_bq = PythonOperator(
 end = DummyOperator(task_id = "end", dag = dag)
 
 start >> task_1_merge_chunks >> task_2_bucket_to_bq >> end
-
-
 
