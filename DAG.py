@@ -14,7 +14,7 @@ default_args = {
     "email":[],
     "email_on_failure": False,
     "email_on_retry" : False,
-    "owner": "airflow",
+    "owner": "riya",
     "retries" : 3,
     "retry_delay": timedelta(minutes = 2),
     "start_date" : datetime(2021, 8, 31)
