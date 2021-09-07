@@ -15,6 +15,6 @@ def hello_pubsub(event, context):
     df = pd.json_normalize(json_data)
     storage_client = storage.Client()
     #df = self.convert_message_to_dataframe()
-    bucket = storage_client.get_bucket('consumed-twitter-data1')
+    bucket = storage_client.get_bucket('twitter-data-1059')
     blob = bucket.blob('twitter_data{}.csv'.format(context.timestamp))
     blob.upload_from_string(data = df.to_csv(index = False), content_type = 'text/csv')
